@@ -141,7 +141,7 @@ fn main() {
         println!("Just sent a packet");
     }
 
-    capture_thread.join().unwrap(); // valutare se serve
+    capture_thread.join().unwrap();
 
     match rx.recv() {
         Ok(msg) => {
