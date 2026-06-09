@@ -3,7 +3,6 @@ use std::time::{Duration, Instant};
 use pcap::Capture;
 use std::net::{UdpSocket, SocketAddr};
 use etherparse;
-use rand::Rng;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
@@ -48,11 +47,11 @@ fn main() {
                 .open()
                 .unwrap();
     let mut cap: Capture<pcap::Active> = capture.setnonblock().unwrap();
-    cap.filter(&format!("(dst host {} and udp and dst portrange 50000-55000) or (icmp and src host {})", cli.host, cli.host), true).expect("Could not apply filter");
+    cap.filter(&format!("(dst host {} and udp and dst portrange 33000-34000) or (icmp and src host {})", cli.host, cli.host), true).expect("Could not apply filter");
 
     let mut ports: Vec<u16> = Vec::new();
-    for _i in 0..cli.numprobes {
-        let dst_port = rand::thread_rng().gen_range(50000..55000);
+    for i in 0..cli.numprobes {
+        let dst_port = 33434 + i;
         ports.push(dst_port);
     }
     let reference_ports = ports.clone();
